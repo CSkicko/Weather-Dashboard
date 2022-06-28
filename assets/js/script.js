@@ -30,7 +30,7 @@ var getWeatherData = function(event){
 }
 
 var retrieveForecast = function(coords, city){
-    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + coords[0] + "&lon=" + coords[1] + "&exclude=minutely,hourly,alerts&appid=f660a3811e9a5d90a12e993e669272c0"
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + coords[0] + "&lon=" + coords[1] + "&exclude=minutely,hourly,alerts&units=metric&appid=f660a3811e9a5d90a12e993e669272c0"
     console.log(apiUrl);
     console.log(city);
     fetch(apiUrl)
@@ -43,7 +43,10 @@ var retrieveForecast = function(coords, city){
             }
         }) 
         .then(function(data) {
-            console.log(data);
+            console.log("Current Temperature: " + data.current.temp);
+            console.log("Current Wind: " + data.current.wind_speed);
+            console.log("Current Humidity: " + data.current.humidity);
+            console.log("UV Index: " + data.current.uvi);
         })
 }
 
