@@ -1,0 +1,29 @@
+body {
+    box-sizing: border-box;
+}
+
+header {
+    background-image: linear-gradient(to right, #4257d1, #18168b);
+    color: white;
+}
+
+.weather-card {
+    background: #403a5e;
+    color: white;
+}
+
+.uv-indicator {
+    color: white;
+}
+
+.uv-indicator[data-uv="high"] {
+    background: #ce0000;
+}
+
+.uv-indicator[data-uv="medium"] {
+    background: #f7a800;
+}
+
+.uv-indicator[data-uv="low"] {
+    background: #00ac00;
+}
