@@ -32,7 +32,8 @@ var getWeatherData = function(event){
 
 var retrieveForecast = function(coords){
     console.log(coords);
-
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + coords[0] + "&lon=" + coords[1] + "&exclude=minutely,hourly,alerts&appid=f660a3811e9a5d90a12e993e669272c0"
+    console.log(apiUrl);
 }
 
 searchBtn.addEventListener("click", getWeatherData);
