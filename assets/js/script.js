@@ -17,7 +17,7 @@ var getWeatherData = function(event){
             searchItem = event.target.innerHTML;
         }
         // Set the url to retrieve the geocode from positionstack API
-        var apiUrl = "https://api.positionstack.com/v1/forward?access_key=55515964d41906e81966df595b39b4f2&query=" + searchItem;
+        var apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + searchItem + "&appid=f660a3811e9a5d90a12e993e669272c0";
         // Ensure a search item is selected (i.e. handles someone clicking search with no input text)
         if (searchItem){
             fetch(apiUrl)
@@ -31,9 +31,9 @@ var getWeatherData = function(event){
                 })
                 .then(function (data) {
                     // Set the latitude and longitude and pass it to retrieveForecast to get the weather data from open weather API
-                    if (data.data.length){
-                        var latitude = data.data[0].latitude;
-                        var longitude = data.data[0].longitude;
+                    if (data.length){
+                        var latitude = data[0].lat;
+                        var longitude = data[0].lon;
                         var coordinates = [latitude, longitude];
                         retrieveForecast(coordinates, searchItem);
                         // Save the searched item
