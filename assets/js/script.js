@@ -1,41 +1,48 @@
-var searchBtn = document.getElementById("search-button");
+var searchCol = document.getElementById("search-column");
 var searchInput = document.getElementById("searched-city");
 var currentWeather = document.getElementById("current-conditions");
 var instructionElems = document.getElementsByClassName("instruction");
 
 var getWeatherData = function(event){
     event.preventDefault();
-    var searchItem = searchInput.value;
-    var apiUrl = "http://api.positionstack.com/v1/forward?access_key=55515964d41906e81966df595b39b4f2&query=" + searchItem;
-    if (searchItem){
-        fetch(apiUrl)
-            .then(function (response) {
-                if (response.status === 200){
-                    return response.json();
-                }
-                else {
-                    alert("Cannot find resource, please try again.");
-                }
-            })
-            .then(function (data) {
-                // console.log(data.data)
-                if (data.data.length){
-                    var latitude = data.data[0].latitude;
-                    var longitude = data.data[0].longitude;
-                    var coordinates = [latitude, longitude];
-                    retrieveForecast(coordinates, searchItem);
-                    saveSearchedCity(searchItem);
-                } else {
-                    alert("City not found, please enter a valid city");
-                }
-            })
+    if (event.target.tagName == "BUTTON"){
+        var searchItem;
+        // Check if the user is loading a previous search from the buttons
+        if (event.target.type == "submit"){
+            searchItem = searchInput.value;
+        } else {
+            searchItem = event.target.innerHTML;
+        }
+        // Set the url to retrieve the geocode
+        var apiUrl = "http://api.positionstack.com/v1/forward?access_key=55515964d41906e81966df595b39b4f2&query=" + searchItem;
+        // Ensure a search item is selected (i.e. handles someone clicking search with no input text)
+        if (searchItem){
+            fetch(apiUrl)
+                .then(function (response) {
+                    if (response.status === 200){
+                        return response.json();
+                    }
+                    else {
+                        alert("Cannot find resource, please try again.");
+                    }
+                })
+                .then(function (data) {
+                    if (data.data.length){
+                        var latitude = data.data[0].latitude;
+                        var longitude = data.data[0].longitude;
+                        var coordinates = [latitude, longitude];
+                        retrieveForecast(coordinates, searchItem);
+                        saveSearchedCity(searchItem);
+                    } else {
+                        alert("City not found, please enter a valid city");
+                    }
+                })
+        }
     }
 }
 
 var retrieveForecast = function(coords, city){
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + coords[0] + "&lon=" + coords[1] + "&exclude=minutely,hourly,alerts&units=metric&appid=f660a3811e9a5d90a12e993e669272c0"
-    console.log(apiUrl);
-    console.log(city);
     fetch(apiUrl)
         .then(function (response) {
             if (response.status === 200){
@@ -106,4 +113,4 @@ var saveSearchedCity = function(city){
     }
 }
 
-searchBtn.addEventListener("click", getWeatherData);
+searchCol.addEventListener("click", getWeatherData);
