@@ -24,6 +24,7 @@ var getWeatherData = function(event){
                     var longitude = data.data[0].longitude;
                     var coordinates = [latitude, longitude];
                     retrieveForecast(coordinates, searchItem);
+                    saveSearchedCity(searchItem);
                 } else {
                     alert("City not found, please enter a valid city");
                 }
@@ -95,6 +96,12 @@ var display5DayForecast = function(weatherData){
         var forecastIconURL = "http://openweathermap.org/img/wn/" + weatherData[i+1].weather[0].icon + "@2x.png"
         
         weatherForecastCards[i].innerHTML = "<h6>" + forecastDate + "</h6><img src=" + forecastIconURL + "><p>Temp: " + weatherData[i+1].temp.day + " \u00B0C</p><p>Wind: " + weatherData[i+1].wind_speed + " kph</p><p>Humidity: " + weatherData[i+1].humidity + " %</p>";
+    }
+}
+
+var saveSearchedCity = function(city){
+    if (!localStorage.getItem(city)){
+        localStorage.setItem(city, city);
     }
 }
 
