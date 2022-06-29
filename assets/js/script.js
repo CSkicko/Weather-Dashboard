@@ -66,7 +66,7 @@ var displayCurrent = function(weatherData, city){
     tempElem.innerHTML = "Temperature: " + currentTemp + " \u00B0C";
     windElem.innerHTML = "Wind: " + currentWind + " kph";
     humidityElem.innerHTML = "Humidity: " + currentHumidity + " %";
-    uviElem.innerHTML = "UVI: <span>" + currentUvi + "</span>"; 
+    uviElem.innerHTML = "UVI: <span class='uv-indicator p-1 rounded' data-uv='high'>" + currentUvi + "</span>"; 
 
     // Add elements to current weather div
     currentWeather.innerHTML = "";
@@ -75,6 +75,14 @@ var displayCurrent = function(weatherData, city){
     currentWeather.append(windElem);
     currentWeather.append(humidityElem);
     currentWeather.append(uviElem);
+
+    // Set uv indicator color
+    if (currentUvi < 3){
+        document.getElementsByClassName("uv-indicator")[0].dataset.uv = "low";
+    } else if (currentUvi < 6){
+        document.getElementsByClassName("uv-indicator")[0].dataset.uv = "medium";
+    }
+    
 }
 
 searchBtn.addEventListener("click", getWeatherData);
