@@ -31,5 +31,6 @@ Use the following link to view the final rendered website:
 https://cskicko.github.io/Weather-Dashboard/
 
 A screenshot of the final product is provided below:
+![cskicko github io_Weather-Dashboard_](https://user-images.githubusercontent.com/84214056/176353609-911ee0cf-d046-4eee-9c35-d2b31747995f.png)
 
 
