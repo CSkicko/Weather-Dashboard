@@ -45,6 +45,7 @@ var retrieveForecast = function(coords, city){
         }) 
         .then(function(data) {
             displayCurrent(data.current, city);
+            display5DayForecast(data.daily);
         })
 }
 
@@ -62,7 +63,7 @@ var displayCurrent = function(weatherData, city){
     var uviElem = document.createElement("p");
 
     // Create element content
-    titleElem.innerHTML = city + " (" + moment().format("DD/MM/YYYY") +") <img src=http://openweathermap.org/img/wn/" + currentIcon + "@2x.png>";
+    titleElem.innerHTML = city + " (" + moment(weatherData.dt, "X").format("DD/MM/YYYY") +") <img src=http://openweathermap.org/img/wn/" + currentIcon + "@2x.png>";
     tempElem.innerHTML = "Temperature: " + currentTemp + " \u00B0C";
     windElem.innerHTML = "Wind: " + currentWind + " kph";
     humidityElem.innerHTML = "Humidity: " + currentHumidity + " %";
@@ -83,6 +84,17 @@ var displayCurrent = function(weatherData, city){
         document.getElementsByClassName("uv-indicator")[0].dataset.uv = "medium";
     }
     
+}
+
+var display5DayForecast = function(weatherData){
+    var weatherForecastCards = document.getElementsByClassName("weather-card");
+    for (var i = 0; i < weatherForecastCards.length; i++){
+        var forecastDate = moment(weatherData[i+1].dt, "X").format("DD/MM/YYYY");
+        var forecastIconURL = "http://openweathermap.org/img/wn/" + weatherData[i+1].weather[0].icon + "@2x.png"
+        
+        weatherForecastCards[i].innerHTML = "<h6>" + forecastDate + "</h6><img src=" + forecastIconURL + ">";
+    }
+    console.log(weatherData);
 }
 
 searchBtn.addEventListener("click", getWeatherData);

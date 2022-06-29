@@ -7,6 +7,10 @@ header {
     color: white;
 }
 
+h6 {
+    font-size: 16px;
+}
+
 .weather-card {
     background: #403a5e;
     color: white;
