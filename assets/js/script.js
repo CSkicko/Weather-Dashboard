@@ -108,9 +108,20 @@ var display5DayForecast = function(weatherData){
 }
 
 var saveSearchedCity = function(city){
-    if (!localStorage.getItem(city)){
-        localStorage.setItem(city, city);
+    var newSearchesList = [];
+    if (!localStorage.getItem("previousSearches")){
+        newSearchesList.push(city);
+    } else {
+        newSearchesList = JSON.parse(localStorage.getItem("previousSearches"));
+        if (!newSearchesList.includes(city) || newSearchesList == "null"){
+            newSearchesList.push(city);
+        }
     }
+    localStorage.setItem("previousSearches", JSON.stringify(newSearchesList));
 }
+
+// var renderSavedSearches = function(){
+//     localStorage
+// }
 
 searchCol.addEventListener("click", getWeatherData);
