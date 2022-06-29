@@ -74,7 +74,8 @@ var displayCurrent = function(weatherData, city){
     humidityElem.innerHTML = "Humidity: " + currentHumidity + " %";
     uviElem.innerHTML = "UVI: <span class='uv-indicator p-1 rounded' data-uv='high'>" + currentUvi + "</span>"; 
 
-    // Add elements to current weather div
+    // Clear current weather and add elements to current weather div
+    currentWeather.innerHTML = "";
     currentWeather.append(titleElem);
     currentWeather.append(tempElem);
     currentWeather.append(windElem);
