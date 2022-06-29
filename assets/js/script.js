@@ -1,5 +1,6 @@
 var searchBtn = document.getElementById("search-button");
 var searchInput = document.getElementById("searched-city");
+var currentWeather = document.getElementById("current-conditions");
 
 var getWeatherData = function(event){
     event.preventDefault();
@@ -43,11 +44,36 @@ var retrieveForecast = function(coords, city){
             }
         }) 
         .then(function(data) {
-            console.log("Current Temperature: " + data.current.temp);
-            console.log("Current Wind: " + data.current.wind_speed);
-            console.log("Current Humidity: " + data.current.humidity);
-            console.log("UV Index: " + data.current.uvi);
+            displayCurrent(data.current, city);
         })
+}
+
+var displayCurrent = function(weatherData, city){
+    // Set up variables
+    var currentTemp = weatherData.temp;
+    var currentWind = weatherData.wind_speed;
+    var currentHumidity = weatherData.humidity;
+    var currentUvi = weatherData.uvi;
+    var titleElem = document.createElement("h4");
+    var tempElem = document.createElement("p");
+    var windElem = document.createElement("p");
+    var humidityElem = document.createElement("p");
+    var uviElem = document.createElement("p");
+
+    // Create element content
+    titleElem.innerHTML = city;
+    tempElem.innerHTML = "Temperature: " + currentTemp + " C";
+    windElem.innerHTML = "Wind: " + currentWind + " mph";
+    humidityElem.innerHTML = "Humidity: " + currentHumidity + " %";
+    uviElem.innerHTML = "UVI: <span>" + currentUvi + "</span>"; 
+
+    // Add elements to current weather div
+    currentWeather.innerHTML = "";
+    currentWeather.append(titleElem);
+    currentWeather.append(tempElem);
+    currentWeather.append(windElem);
+    currentWeather.append(humidityElem);
+    currentWeather.append(uviElem);
 }
 
 searchBtn.addEventListener("click", getWeatherData);
