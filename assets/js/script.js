@@ -2,6 +2,7 @@ var searchCol = document.getElementById("search-column");
 var searchInput = document.getElementById("searched-city");
 var currentWeather = document.getElementById("current-conditions");
 var instructionElems = document.getElementsByClassName("instruction");
+var previousSearchesElem = document.getElementById("previous-searches");
 
 var getWeatherData = function(event){
     event.preventDefault();
@@ -118,10 +119,22 @@ var saveSearchedCity = function(city){
         }
     }
     localStorage.setItem("previousSearches", JSON.stringify(newSearchesList));
+    renderSavedSearches();
 }
 
-// var renderSavedSearches = function(){
-//     localStorage
-// }
+var renderSavedSearches = function(){
+    previousSearchesElem.innerHTML = "";
+    if (localStorage.getItem("previousSearches")){
+        var searchHistory = JSON.parse(localStorage.getItem("previousSearches"));
+        for (var i = 0; i < searchHistory.length; i++){
+            var newElem = document.createElement("button");
+            newElem.innerHTML = searchHistory[i];
+            newElem.classList.add("btn", "btn-secondary", "w-100", "mb-2");
+            newElem.setAttribute("type", "button");
+            previousSearchesElem.append(newElem);
+        }
+    }
+}
 
+renderSavedSearches();
 searchCol.addEventListener("click", getWeatherData);
