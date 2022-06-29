@@ -54,16 +54,17 @@ var displayCurrent = function(weatherData, city){
     var currentWind = weatherData.wind_speed;
     var currentHumidity = weatherData.humidity;
     var currentUvi = weatherData.uvi;
-    var titleElem = document.createElement("h4");
+    var currentIcon = weatherData.weather[0].icon;
+    var titleElem = document.createElement("h3");
     var tempElem = document.createElement("p");
     var windElem = document.createElement("p");
     var humidityElem = document.createElement("p");
     var uviElem = document.createElement("p");
 
     // Create element content
-    titleElem.innerHTML = city;
-    tempElem.innerHTML = "Temperature: " + currentTemp + " C";
-    windElem.innerHTML = "Wind: " + currentWind + " mph";
+    titleElem.innerHTML = city + " <img src=http://openweathermap.org/img/wn/" + currentIcon + "@2x.png>";
+    tempElem.innerHTML = "Temperature: " + currentTemp + " \u00B0C";
+    windElem.innerHTML = "Wind: " + currentWind + " kph";
     humidityElem.innerHTML = "Humidity: " + currentHumidity + " %";
     uviElem.innerHTML = "UVI: <span>" + currentUvi + "</span>"; 
 
