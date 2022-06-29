@@ -16,10 +16,12 @@ h6 {
     font-size: 12px;
 }
 
+/* Ensures uv indicator text is visible noting the colours applied below based on uv value */
 .uv-indicator {
     color: white;
 }
 
+/* Data-uv applied on current day uv information to change colour based on value using css below */
 .uv-indicator[data-uv="high"] {
     background: #ce0000;
 }
@@ -32,6 +34,7 @@ h6 {
     background: #00ac00;
 }
 
+/* Media queries used to change font sizes on weather cards to improve UI */
 @media screen and (min-width: 1430px){
     h6 {
         font-size: 24px;

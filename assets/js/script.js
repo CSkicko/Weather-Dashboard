@@ -4,8 +4,10 @@ var currentWeather = document.getElementById("current-conditions");
 var instructionElems = document.getElementsByClassName("instruction");
 var previousSearchesElem = document.getElementById("previous-searches");
 
+// Overarching function to get the weather data from the API
 var getWeatherData = function(event){
     event.preventDefault();
+    // Check to see if a button is pressed
     if (event.target.tagName == "BUTTON"){
         var searchItem;
         // Check if the user is loading a previous search from the buttons
@@ -14,7 +16,7 @@ var getWeatherData = function(event){
         } else {
             searchItem = event.target.innerHTML;
         }
-        // Set the url to retrieve the geocode
+        // Set the url to retrieve the geocode from positionstack API
         var apiUrl = "http://api.positionstack.com/v1/forward?access_key=55515964d41906e81966df595b39b4f2&query=" + searchItem;
         // Ensure a search item is selected (i.e. handles someone clicking search with no input text)
         if (searchItem){
@@ -28,11 +30,13 @@ var getWeatherData = function(event){
                     }
                 })
                 .then(function (data) {
+                    // Set the latitude and longitude and pass it to retrieveForecast to get the weather data from open weather API
                     if (data.data.length){
                         var latitude = data.data[0].latitude;
                         var longitude = data.data[0].longitude;
                         var coordinates = [latitude, longitude];
                         retrieveForecast(coordinates, searchItem);
+                        // Save the searched item
                         saveSearchedCity(searchItem);
                     } else {
                         alert("City not found, please enter a valid city");
@@ -42,7 +46,9 @@ var getWeatherData = function(event){
     }
 }
 
+// Function to retrieve forecast data based on coordinates. Note city is also passed to ensure it can be provided to the displayCurrent function
 var retrieveForecast = function(coords, city){
+    // Generates the open weather API url based on the coordinates
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + coords[0] + "&lon=" + coords[1] + "&exclude=minutely,hourly,alerts&units=metric&appid=f660a3811e9a5d90a12e993e669272c0"
     fetch(apiUrl)
         .then(function (response) {
@@ -57,11 +63,13 @@ var retrieveForecast = function(coords, city){
             for (var i = 0; i < instructionElems.length; i++){
                 instructionElems[i].style.display = "none";
             }
+            // Passes the data from the API into the displayCurrent and 5-day forecast functions
             displayCurrent(data.current, city);
             display5DayForecast(data.daily);
         })
 }
 
+// Function to display the current weather of the selected city
 var displayCurrent = function(weatherData, city){
     // Set up variables
     var currentTemp = weatherData.temp;
@@ -98,8 +106,10 @@ var displayCurrent = function(weatherData, city){
     }
 }
 
+// Function to display the 5-day forecast for the selected city
 var display5DayForecast = function(weatherData){
     var weatherForecastCards = document.getElementsByClassName("weather-card");
+    // Loop through the weather cards and add weather content to each
     for (var i = 0; i < weatherForecastCards.length; i++){
         var forecastDate = moment(weatherData[i+1].dt, "X").format("DD/MM/YYYY");
         var forecastIconURL = "http://openweathermap.org/img/wn/" + weatherData[i+1].weather[0].icon + "@2x.png"
@@ -108,12 +118,15 @@ var display5DayForecast = function(weatherData){
     }
 }
 
+// Function to save the searched city
 var saveSearchedCity = function(city){
     var newSearchesList = [];
+    // If there's nothing in local storeage then add the city to the new searches list, otherwise add the local storage items, then push the new city
     if (!localStorage.getItem("previousSearches")){
         newSearchesList.push(city);
     } else {
         newSearchesList = JSON.parse(localStorage.getItem("previousSearches"));
+        // Checks to see if the city is already stored
         if (!newSearchesList.includes(city) || newSearchesList == "null"){
             newSearchesList.push(city);
         }
@@ -122,6 +135,7 @@ var saveSearchedCity = function(city){
     renderSavedSearches();
 }
 
+// Function to display the previous searches on the page
 var renderSavedSearches = function(){
     previousSearchesElem.innerHTML = "";
     if (localStorage.getItem("previousSearches")){
