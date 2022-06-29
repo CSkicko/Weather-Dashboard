@@ -17,7 +17,7 @@ var getWeatherData = function(event){
             searchItem = event.target.innerHTML;
         }
         // Set the url to retrieve the geocode from positionstack API
-        var apiUrl = "http://api.positionstack.com/v1/forward?access_key=55515964d41906e81966df595b39b4f2&query=" + searchItem;
+        var apiUrl = "https://api.positionstack.com/v1/forward?access_key=55515964d41906e81966df595b39b4f2&query=" + searchItem;
         // Ensure a search item is selected (i.e. handles someone clicking search with no input text)
         if (searchItem){
             fetch(apiUrl)
@@ -84,7 +84,7 @@ var displayCurrent = function(weatherData, city){
     var uviElem = document.createElement("p");
 
     // Create element content
-    titleElem.innerHTML = city + " (" + moment(weatherData.dt, "X").format("DD/MM/YYYY") +") <img src=http://openweathermap.org/img/wn/" + currentIcon + "@2x.png>";
+    titleElem.innerHTML = city + " (" + moment(weatherData.dt, "X").format("DD/MM/YYYY") +") <img src=https://openweathermap.org/img/wn/" + currentIcon + "@2x.png>";
     tempElem.innerHTML = "Temperature: " + currentTemp + " \u00B0C";
     windElem.innerHTML = "Wind: " + currentWind + " kph";
     humidityElem.innerHTML = "Humidity: " + currentHumidity + " %";
@@ -112,7 +112,7 @@ var display5DayForecast = function(weatherData){
     // Loop through the weather cards and add weather content to each
     for (var i = 0; i < weatherForecastCards.length; i++){
         var forecastDate = moment(weatherData[i+1].dt, "X").format("DD/MM/YYYY");
-        var forecastIconURL = "http://openweathermap.org/img/wn/" + weatherData[i+1].weather[0].icon + "@2x.png"
+        var forecastIconURL = "https://openweathermap.org/img/wn/" + weatherData[i+1].weather[0].icon + "@2x.png"
         
         weatherForecastCards[i].innerHTML = "<h6>" + forecastDate + "</h6><img src=" + forecastIconURL + "><p>Temp: " + weatherData[i+1].temp.day + " \u00B0C</p><p>Wind: " + weatherData[i+1].wind_speed + " kph</p><p>Humidity: " + weatherData[i+1].humidity + " %</p>";
     }
