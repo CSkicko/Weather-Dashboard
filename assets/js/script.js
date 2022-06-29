@@ -62,7 +62,7 @@ var displayCurrent = function(weatherData, city){
     var uviElem = document.createElement("p");
 
     // Create element content
-    titleElem.innerHTML = city + " <img src=http://openweathermap.org/img/wn/" + currentIcon + "@2x.png>";
+    titleElem.innerHTML = city + " (" + moment().format("DD/MM/YYYY") +") <img src=http://openweathermap.org/img/wn/" + currentIcon + "@2x.png>";
     tempElem.innerHTML = "Temperature: " + currentTemp + " \u00B0C";
     windElem.innerHTML = "Wind: " + currentWind + " kph";
     humidityElem.innerHTML = "Humidity: " + currentHumidity + " %";
