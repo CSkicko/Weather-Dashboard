@@ -1,6 +1,7 @@
 var searchBtn = document.getElementById("search-button");
 var searchInput = document.getElementById("searched-city");
 var currentWeather = document.getElementById("current-conditions");
+var instructionElems = document.getElementsByClassName("instruction");
 
 var getWeatherData = function(event){
     event.preventDefault();
@@ -44,6 +45,9 @@ var retrieveForecast = function(coords, city){
             }
         }) 
         .then(function(data) {
+            for (var i = 0; i < instructionElems.length; i++){
+                instructionElems[i].style.display = "none";
+            }
             displayCurrent(data.current, city);
             display5DayForecast(data.daily);
         })
@@ -70,7 +74,6 @@ var displayCurrent = function(weatherData, city){
     uviElem.innerHTML = "UVI: <span class='uv-indicator p-1 rounded' data-uv='high'>" + currentUvi + "</span>"; 
 
     // Add elements to current weather div
-    currentWeather.innerHTML = "";
     currentWeather.append(titleElem);
     currentWeather.append(tempElem);
     currentWeather.append(windElem);
@@ -87,14 +90,12 @@ var displayCurrent = function(weatherData, city){
 
 var display5DayForecast = function(weatherData){
     var weatherForecastCards = document.getElementsByClassName("weather-card");
-    console.log(weatherData);
     for (var i = 0; i < weatherForecastCards.length; i++){
         var forecastDate = moment(weatherData[i+1].dt, "X").format("DD/MM/YYYY");
         var forecastIconURL = "http://openweathermap.org/img/wn/" + weatherData[i+1].weather[0].icon + "@2x.png"
         
         weatherForecastCards[i].innerHTML = "<h6>" + forecastDate + "</h6><img src=" + forecastIconURL + "><p>Temp: " + weatherData[i+1].temp.day + " \u00B0C</p><p>Wind: " + weatherData[i+1].wind_speed + " kph</p><p>Humidity: " + weatherData[i+1].humidity + " %</p>";
     }
-    console.log(weatherData);
 }
 
 searchBtn.addEventListener("click", getWeatherData);
