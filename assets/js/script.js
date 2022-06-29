@@ -83,16 +83,16 @@ var displayCurrent = function(weatherData, city){
     } else if (currentUvi < 6){
         document.getElementsByClassName("uv-indicator")[0].dataset.uv = "medium";
     }
-    
 }
 
 var display5DayForecast = function(weatherData){
     var weatherForecastCards = document.getElementsByClassName("weather-card");
+    console.log(weatherData);
     for (var i = 0; i < weatherForecastCards.length; i++){
         var forecastDate = moment(weatherData[i+1].dt, "X").format("DD/MM/YYYY");
         var forecastIconURL = "http://openweathermap.org/img/wn/" + weatherData[i+1].weather[0].icon + "@2x.png"
         
-        weatherForecastCards[i].innerHTML = "<h6>" + forecastDate + "</h6><img src=" + forecastIconURL + ">";
+        weatherForecastCards[i].innerHTML = "<h6>" + forecastDate + "</h6><img src=" + forecastIconURL + "><p>Temp: " + weatherData[i+1].temp.day + " \u00B0C</p><p>Wind: " + weatherData[i+1].wind_speed + " kph</p><p>Humidity: " + weatherData[i+1].humidity + " %</p>";
     }
     console.log(weatherData);
 }
